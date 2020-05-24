@@ -1,6 +1,7 @@
 {
     "files.associations": {
-        "new": "cpp"
+        "new": "cpp",
+        "chrono": "cpp"
     },
     "python.pythonPath": "C:\\Users\\EMRE\\AppData\\Local\\Programs\\Python\\Python38\\python.exe"
 }

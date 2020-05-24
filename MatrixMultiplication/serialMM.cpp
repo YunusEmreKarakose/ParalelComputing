@@ -1,6 +1,7 @@
 #include<iostream>
 //https://en.cppreference.com/w/cpp/chrono/steady_clock
 #include <chrono> 
+#include "omp.h"
 using namespace std;
 //Matrix class
 template <typename T>
@@ -73,6 +74,42 @@ class Matrix{
 			cout<<"these matrixes cant be multiplied"<<endl;
 		}
 	}
+    //paralel for 
+    void paralelMM(Matrix &m){
+    	if(this->column==m.getRow()){//can multiply
+    		//multiplication start/end time
+    		auto start = chrono::steady_clock::now();
+    		//this*m=result
+    		T *result=new T[this->row*m.getColumn()];
+            //paralel
+            #pragma omp parallel for private(i,j,k) num_threads(4)
+			for(int i=0;i<this->row;i++){
+				for(int j=0;j<m.getColumn();j++){
+						T tmp=0;
+						for(int k=0;k<this->column;k++){
+							tmp=tmp+(this->getMatrixElem(i,k)*m.getMatrixElem(k,j));
+						}
+						result[i*m.getColumn()+j]=tmp;	
+					}
+			}
+			//end time
+			auto end = chrono::steady_clock::now();
+			auto diff = end - start;
+            cout.precision(10);//print time diff with all float
+			cout << chrono::duration <double, nano> (diff).count() << " nano" << endl;
+			//printresult
+			/*cout<<"result:"<<endl;
+			for(int i=0;i<this->row;i++){
+				for(int j=0;j<m.getColumn();j++){
+						cout<<result[i*m.getColumn()+j]<<" ";	
+					}
+				cout<<endl;
+			}*/
+			delete []result;	
+		}else{
+			cout<<"these matrixes cant be multiplied"<<endl;
+		}
+    }
 };
 
 int main(){
@@ -81,10 +118,13 @@ int main(){
     Matrix<float> *m1=new Matrix<float>(a,a);
     Matrix<float> *m2=new Matrix<float>(a,a);
     m1->serialMM(*m2);
+    m1->paralelMM(*m2);
+    cout<<"double"<<endl;
 	//double
     Matrix<double> *m3=new Matrix<double>(a,a);
     Matrix<double> *m4=new Matrix<double>(a,a);
     m3->serialMM(*m4);
+    m3->paralelMM(*m4);
 	
 	
 	delete m1;

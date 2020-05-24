@@ -31,7 +31,7 @@ def matrixMul(A,B):
     return
 
 # run    
-N=int(100)
+N=int(300)
 
 #float
 matrixAf=[[np.float32(1.1) for row in range(N)] for col in range(N)]
