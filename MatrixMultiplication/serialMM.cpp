@@ -1,6 +1,5 @@
 #include<iostream>
-#include <time.h>
-
+//https://en.cppreference.com/w/cpp/chrono/steady_clock
 #include <chrono> 
 using namespace std;
 //Matrix class
@@ -59,7 +58,8 @@ class Matrix{
 			//end time
 			auto end = chrono::steady_clock::now();
 			auto diff = end - start;
-			cout << chrono::duration <double, milli> (diff).count() << " millisecond" << endl;
+            cout.precision(10);//print time diff with all float
+			cout << chrono::duration <double, nano> (diff).count() << " nano" << endl;
 			//printresult
 			/*cout<<"result:"<<endl;
 			for(int i=0;i<this->row;i++){
