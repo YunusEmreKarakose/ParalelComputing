@@ -27,20 +27,19 @@ def matrixMul(A,B):
     return
 
 # run    
-N=int(200)
+N=int(100)
 
 #float
-matrixA=[[np.float32(1.0) for row in range(N)] for col in range(N)]
-matrixB=[[np.float32(1.0) for row in range(N)] for col in range(N)]
+matrixA=[[np.float32(1.1) for row in range(N)] for col in range(N)]
+matrixB=[[np.float32(1.1) for row in range(N)] for col in range(N)]
 """
 #double
-matrixA=[[np.float64(1.0) for row in range(N)] for col in range(N)]
-matrixB=[[np.float64(1.0) for row in range(N)] for col in range(N)]
+matrixA=[[np.float64(1.1) for row in range(N)] for col in range(N)]
+matrixB=[[np.float64(1.1) for row in range(N)] for col in range(N)]
 """
 #multiplication start time
 startTime=time.time()
-
 matrixMul(matrixA,matrixB)
 
 
-print("multiplication has done--- %s seconds ---" % (time.time() - startTime))
+print("multiplication took--- %s seconds ---" % (time.time() - startTime))
