@@ -65,7 +65,7 @@ void pmm(T *A,T *B,int size){
     T *C=new T[size*size];
     //start time
     double start=omp_get_wtime();
-    //default num_threads(2) 2=4=8 eşit sonuç
+    //default num_threads(2) for i4510
     //schedule static dynamic yakın
     #pragma omp parallel for shared(A,B,C) schedule(dynamic)
     for(int i=0;i<size;i++){
