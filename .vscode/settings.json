@@ -6,7 +6,8 @@
         "initializer_list": "cpp",
         "utility": "cpp",
         "iostream": "cpp",
-        "ratio": "cpp"
+        "ratio": "cpp",
+        "ostream": "cpp"
     },
     "python.pythonPath": "C:\\Users\\EMRE\\AppData\\Local\\Programs\\Python\\Python38\\python.exe"
 }

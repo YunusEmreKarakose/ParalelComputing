@@ -9,17 +9,32 @@ void pmm(T *A,T *B,int size);
 //main
 int main(){
     cout.precision(10);
-    int size=500;
+    int size=2000;
+    //for double
     double *Ad=new double[size*size];    
     double *Bd=new double[size*size];
     for(int i=0;i<size*size;i++){
         Ad[i]=1.1;
         Bd[i]=1.1;        
     }
+    cout<<"double matrix size "<<size<<"x"<<size<<" with val 1.1"<<endl;
     smm<double>(Ad,Bd,size);
     pmm<double>(Ad,Bd,size);
     delete []Ad;
     delete []Bd;
+    //for float
+    float *Af=new float[size*size];    
+    float *Bf=new float[size*size];
+    for(int i=0;i<size*size;i++){
+        Af[i]=1.1;
+        Bf[i]=1.1;        
+    }
+    cout<<"float matrix size "<<size<<"x"<<size<<" with val 1.1"<<endl;
+    smm<float>(Af,Bf,size);
+    pmm<float>(Af,Bf,size);
+    delete []Af;
+    delete []Bf;
+
     cin>>size;
     return 0;
 }
@@ -39,7 +54,7 @@ void smm(T *A,T *B,int size){
     }
     //end time
     double end=omp_get_wtime();
-	cout<<"multiplication took " <<end - start<<endl;
+	cout<<"sequantial multiplication took " <<end - start<<endl;
     
     delete []C;
     return;
@@ -63,7 +78,7 @@ void pmm(T *A,T *B,int size){
     
     //end time
     double end=omp_get_wtime();
-	cout<<"multiplication took " <<end - start<<endl;
+	cout<<"parallel multiplication took " <<end - start<<endl;
     delete []C;
     return;
 };
