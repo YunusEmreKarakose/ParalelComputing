@@ -65,9 +65,9 @@ void pmm(T *A,T *B,int size){
     T *C=new T[size*size];
     //start time
     double start=omp_get_wtime();
-    //default num_threads(2) for i4510
+    //default num_threads(4) for i4510
     //schedule static dynamic yakın
-    #pragma omp parallel for shared(A,B,C) schedule(dynamic)
+    #pragma omp parallel for shared(A,B,C) schedule(dynamic) num_threads(4)
     for(int i=0;i<size;i++){
         for(int j=0;j<size;j++){
             for(int k=0;k<size;k++){
