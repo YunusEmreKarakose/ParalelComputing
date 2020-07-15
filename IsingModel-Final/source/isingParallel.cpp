@@ -11,7 +11,7 @@
 #define LEFT 2
 #define DOWN 3
 
-#define L 128
+#define L 16
 #define SIZE L*L
 
 #define DATA 9
@@ -28,7 +28,8 @@
 #define CHERR 9
 
 using namespace std;
-
+//global dostep timer
+double dsTime=0;
 
 void initialize(bool spins[SIZE], mt19937& gen, uniform_int_distribution<int>& brandom);
 void get_neighbors(int neighs[SIZE][4]);
@@ -96,10 +97,10 @@ int main(void)
 	//1st for 5.0>i=>2.4
     double forOneStart=omp_get_wtime();
     /*
-		orijinal for( tstar = tmax; tstar > tcrit_up; tstar -= deltat)//27 kere 2.4<tstar<5.0 ,, --0.1
-		Orijinal foru kullanmamamýzýn sebebi openmp'de paralel for için sadece integer iterasyon deðiþkenine iizn verilmesi
+		orijinal for( tstar = tmax; tstar > tcrit_up; tstar -= deltat)//27 times 2.4<tstar<5.0 ,, --0.1
+		Openmp parallel for only allows integer iteration variable
 	*/
-    tstar=tmax;//tstarý 5.0a setle
+    tstar=tmax;//set tstar to 5.0
     #pragma omp parallel for schedule(dynamic) num_threads(4)  
 	for (int i=0; i<27;i++)
 	{
@@ -113,8 +114,8 @@ int main(void)
     cout<<"1st for took "<<forOneEnd-forOneStart<<"  sec"<<endl;
     //2nd for 2.4>i=>2.2
     double forTwoStart=omp_get_wtime();
-    //orijinal for(tstar = tcrit_up - deltat_crit; tstar > tcrit_down; tstar -= deltat_crit)// 20kere 2.2<=tstar <2.39 ,, --0.01
-    tstar=tcrit_up - deltat_crit;//tstarý 2.39 a setle
+    //orijinal for(tstar = tcrit_up - deltat_crit; tstar > tcrit_down; tstar -= deltat_crit)// 20 times 2.2<=tstar <2.39 ,, --0.01
+    tstar=tcrit_up - deltat_crit;//set tstar to 2.39 
     #pragma omp parallel for schedule(dynamic) num_threads(4) 
     for (int i=0; i<20 ;i++ )
 	{
@@ -130,10 +131,10 @@ int main(void)
     cout<<"2nd for took "<<forTwoEnd-forTwoStart<<"  sec"<<endl;
     //3rd for 2.2>i=>0.1
     double forThreeStart=omp_get_wtime();
-	//orijinal for(tstar = tcrit_down - deltat; tstar >= tmin; tstar -= deltat) // 20 kere 0.2<=tstar<2.2 ,, --0.1
-	 tstar=tcrit_down- deltat;// tstarý 2.1 e setle
+	//orijinal for(tstar = tcrit_down - deltat; tstar >= tmin; tstar -= deltat) // 20 times 0.2<=tstar<2.2 ,, --0.1
+	 tstar=tcrit_down- deltat;//set tstar to 2.1
 	#pragma omp parallel for schedule(dynamic) num_threads(4) 
-    for (int i=0; i<19; i++)
+    for (int i=0; i<20; i++)
 	{
 	    do_step(spins, neighs, tstar, N, h, energy, gen, ran_u, ran_pos, m);
 	    w_output(output, tstar, N, m);
@@ -148,8 +149,20 @@ int main(void)
 	//end time
     double endTime=omp_get_wtime();
     cout<<"took:: "<<endTime-startTime<<endl;
-    int fififi;
-    cin>>fififi;
+    //write results to txt
+    string for1="1st for took::"+to_string(forOneEnd-forOneStart)+" sec.\n";
+    string for2="2nd for took::"+to_string(forTwoEnd-forTwoStart)+" sec.\n";
+    string for3="3th for took::"+to_string(forThreeEnd-forThreeStart)+" sec.\n";
+    string avjDs="Avarage do_step function took::"+to_string(dsTime/67.0)+" sec.\n";
+    string all="Calculation took::"+to_string(endTime-startTime)+" sec.\n";
+    ofstream out("test_alt162.txt",ios::out | ios::app );
+    out<<for1;
+    out<<for2;
+    out<<for3;
+    out<<avjDs;
+    out<<all;
+    
+    out.close();
 	return 0;
 
 }
@@ -283,6 +296,7 @@ void do_step(bool spins[SIZE],  int neighs[SIZE][4], double tstar, int N, double
     for (i=0; i < DATA; i++)  m[i] /= (1.0 * N);
     double dsEnd=omp_get_wtime();
     cout<<"do_step took "<<dsEnd-dsStart<<endl;
+    dsTime+=dsEnd-dsStart;
 	return;
 }
 
