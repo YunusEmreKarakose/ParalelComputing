@@ -1,4 +1,13 @@
-Main goal of this project is lower computation time.
+Main goal of this project are analyze code and lower computation time.
+According to the analysis of the code, the most time consuming function is do_step()function.
+This function called in three different for loop in code. In my implementation the for loops where do_step function called
+defined parallel loop that does not  have shared resources.
+That gives us more time consuming do_step() function because of unshared resources. But at the end of results,
+we re seeing all computation lower 30 min to 18 min(computation error increase in parallel version due to some resources).
+There is two output file with L=16 value using Intel® Core™ i7-4510U Processor for parallel and sequantial.
+When look at the time results in files. In parallel implementation, do_step() function consumes avarage 64 sec while sequantial do_step() consumes avarage 27 sec.
+But in paralel version four(num_threads(4)) do_step function runs same time and finish. So parallel implementation finish fast.
+
 
 
 Original code ::https://github.com/VictorSeven/IsingModel
