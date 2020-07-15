@@ -1,7 +1,7 @@
 Main goal of this project is lower computation time.
 
 
-Original code above.
+Original code ::https://github.com/VictorSeven/IsingModel
 # IsingModel
 
 A classic implementation of the famous 2D Ising Model, written in C++. This was done as a project for *Cooperative and Critical Phenomena*, a subject for the Master in Physics of Complex Systems offered by the Institute of Cross-Disciplinary Physics and Complex Systems. The code is mostly based in the implementation by Raul Toral in his book *Stochastic Numerical Methods: an Introduction for Students and Scientists.*
