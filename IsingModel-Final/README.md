@@ -8,7 +8,7 @@ There is two output file in ./source with L=16 value runned at Intel® Core™ i
 When look at the time results in files. In parallel implementation, do_step() function consumes avarage 64 sec while sequantial do_step() consumes avarage 27 sec.
 But in paralel version four(num_threads(4)) do_step function runs same time and finish. So parallel implementation finish fast.
 
-
+Compiled with:"-std=c++11 -fopenmp -lpthread"
 
 Original code ::https://github.com/VictorSeven/IsingModel
 # IsingModel
