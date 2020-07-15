@@ -10,7 +10,7 @@ void pmm(T *A,T *B,int size);
 int main(){
     cout.precision(10);
     int size=2000;
-    //for double
+    //for double type
     double *Ad=new double[size*size];    
     double *Bd=new double[size*size];
     for(int i=0;i<size*size;i++){
@@ -22,7 +22,7 @@ int main(){
     pmm<double>(Ad,Bd,size);
     delete []Ad;
     delete []Bd;
-    //for float
+    //for float type
     float *Af=new float[size*size];    
     float *Bf=new float[size*size];
     for(int i=0;i<size*size;i++){
@@ -30,7 +30,7 @@ int main(){
         Bf[i]=1.1;        
     }
     cout<<"float matrix size "<<size<<"x"<<size<<" with val 1.1"<<endl;
-    smm<float>(Af,Bf,size);
+    smm<float>(Af,Bf,size);//sequantial
     pmm<float>(Af,Bf,size);
     delete []Af;
     delete []Bf;
@@ -38,11 +38,11 @@ int main(){
     cin>>size;
     return 0;
 }
-//seri
+//sequantial
 template <class T>
 void smm(T *A,T *B,int size){
     T *C=new T[size*size];
-    //multiplication start/end time
+    //multiplication start time
     auto start = omp_get_wtime();
     for(int i=0;i<size;i++){
         for(int j=0;j<size;j++){
